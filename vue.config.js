@@ -1,0 +1,45 @@
+'use strict'
+const path = require('path')
+
+function resolve(dir) {
+  return path.join(__dirname, dir)
+}
+
+module.exports = {
+  chainWebpack: (config) => {
+    config.when(process.env.NODE_ENV === 'production', (config) => {
+      config
+        .entry('app')
+        .clear()
+        .add('./src/main-prod.js')
+
+      config.set('externals', {
+        vue: 'Vue',
+        'element-ui': 'ELEMENT'
+      })
+    })
+
+    config.when(process.env.NODE_ENV === 'development', (config) => {
+      config
+        .entry('app')
+        .clear()
+        .add('./src/main-dev.js')
+    })
+
+    config.module
+      .rule('svg')
+      .exclude.add(resolve('src/icons'))
+      .end()
+    config.module
+      .rule('icons')
+      .test(/\.svg$/)
+      .include.add(resolve('src/icons'))
+      .end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]'
+      })
+      .end()
+  }
+}
