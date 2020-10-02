@@ -22,11 +22,11 @@
         border
         v-if="articleData"
         :data="articleData.records"
-        style="width: 100%;min-width:900px;"
+        style="width: 100%;"
         :default-sort="{ prop: 'sorts.createAt', order: 'descending' }"
       >
         <el-table-column label="序号" type="index" align="center" width="50">
-          <template slot-scope="scope">
+          <template v-slot:default="scope">
             <span>
               {{
               (page.nowPage - 1) * page.pages + scope.$index + 1
@@ -34,17 +34,26 @@
             </span>
           </template>
         </el-table-column>
+        <el-table-column prop="cover" label="标题图片">
+          <template v-slot:default="scope">
+              <img :src="BaseUrl+scope.row.cover" alt="">
+          </template>
+        </el-table-column>
         <el-table-column prop="title" label="标题"></el-table-column>
-        <el-table-column prop="author.username" label="作者" width="180"></el-table-column>
-        <el-table-column prop="sorts.title" label="分类" width="180"></el-table-column>
-        <el-table-column :sortable="true" prop="sorts.createAt" label="发表时间" width="180">
-          <template slot-scope="scope">{{ scope.row.createAt | dateFormat }}</template>
+        <el-table-column prop="author.username" label="作者"></el-table-column>
+        <el-table-column prop="sorts.className" label="分类" ></el-table-column>
+        <el-table-column prop="label.title" label="标签" ></el-table-column>
+        <el-table-column prop="meta.views" label="阅读数" >
         </el-table-column>
-        <el-table-column prop="state" label="状态" width="180">
-          <template slot-scope="scope">{{ scope.row.state === 0 ? '草稿' : '已发布' }}</template>
+        <!-- <el-table-column prop="sorts.title" label="开启评论" ></el-table-column> -->
+        <el-table-column :sortable="true" width="180" prop="sorts.createAt" label="发表时间">
+          <template v-slot:default="scope">{{ scope.row.createAt | dateFormat }}</template>
         </el-table-column>
-        <el-table-column label="操作" width="180">
-          <template slot-scope="scope">
+        <el-table-column prop="state" label="状态">
+          <template v-slot:default="scope">{{ scope.row.state === 0 ? '草稿' : '已发布' }}</template>
+        </el-table-column>
+        <el-table-column width="120" label="操作">
+          <template v-slot:default="scope">
             <el-button
               type="primary"
               icon="el-icon-edit"
@@ -102,6 +111,9 @@ export default {
   computed: {
     sessionPage() {
       return window.sessionStorage.getItem('page')
+    },
+    BaseUrl() {
+      return this.$store.state.user.userData.baseUrl
     }
   },
   created() {
@@ -109,8 +121,8 @@ export default {
       this.page = JSON.parse(this.sessionPage)
     }
     this.getArticle()
-    // 获取分类
-    this.$store.dispatch('scort').then((res) => {
+    // 获取标签
+    this.$store.dispatch('label').then((res) => {
       this.sorts = res
     })
   },
@@ -170,5 +182,8 @@ export default {
 }
 .right {
   margin-right: 10px;
+}
+img {
+  width: 100%;
 }
 </style>

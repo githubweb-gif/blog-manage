@@ -90,19 +90,19 @@
             <el-timeline-item timestamp="2018/4/12" placement="top">
               <el-card>
                 <h4>更新优化，和添加些交互效果</h4>
-                <p>王小虎 提交于 2020/8/1 23:50</p>
+                <p>葡萄  提交于 2020/10/2 23:50</p>
               </el-card>
             </el-timeline-item>
             <el-timeline-item timestamp="2018/4/3" placement="top">
               <el-card>
                 <h4>项目部署到github</h4>
-                <p>王小虎 提交于 2020/5/28 22:09</p>
+                <p>葡萄  提交于 2020/9/28 22:09</p>
               </el-card>
             </el-timeline-item>
             <el-timeline-item timestamp="2018/4/20" placement="top">
               <el-card>
                 <h4>创建项目</h4>
-                <p>葡萄 提交于 2020/4/2 9:20</p>
+                <p>葡萄 提交于 2020/9/2 9:20</p>
               </el-card>
             </el-timeline-item>
           </el-timeline>

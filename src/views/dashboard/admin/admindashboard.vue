@@ -4,7 +4,10 @@
       <div class="user statistics">
         <div class="flex">
           <div class="card-panel-icon-wrapper icon-article">
-            <svg-icon class-name="card-panel-icon" icon-class="wenzhang"></svg-icon>
+            <svg-icon
+              class-name="card-panel-icon"
+              icon-class="wenzhang"
+            ></svg-icon>
           </div>
           <div class="num">
             <h4>总的文章数</h4>
@@ -15,18 +18,24 @@
       <div class="comment statistics">
         <div class="flex">
           <div class="card-panel-icon-wrapper icon-yuedu">
-            <svg-icon class-name="card-panel-icon" icon-class="yuedu"></svg-icon>
+            <svg-icon
+              class-name="card-panel-icon"
+              icon-class="yuedu"
+            ></svg-icon>
           </div>
           <div class="num">
             <h4>博客总浏览量</h4>
-            <span v-if="webInfo.Pageviews">{{webInfo.Pageviews}}</span>
+            <span v-if="webInfo.Pageviews">{{ webInfo.Pageviews }}</span>
           </div>
         </div>
       </div>
       <div class="article statistics">
         <div class="flex">
           <div class="card-panel-icon-wrapper icon-people">
-            <svg-icon class-name="card-panel-icon" icon-class="peoples"></svg-icon>
+            <svg-icon
+              class-name="card-panel-icon"
+              icon-class="peoples"
+            ></svg-icon>
           </div>
           <div class="num">
             <h4>总的管理员</h4>
@@ -70,7 +79,7 @@
         :md="{ span: 24 }"
         :lg="{ span: 12 }"
         :xl="{ span: 13 }"
-        style="padding-right:8px;margin-bottom:30px;"
+        style="padding-right: 8px; margin-bottom: 30px"
       >
         <article-list />
       </el-col>
@@ -80,7 +89,7 @@
         :md="{ span: 12 }"
         :lg="{ span: 6 }"
         :xl="{ span: 6 }"
-        style="margin-bottom:30px;"
+        style="margin-bottom: 30px"
       >
         <to-do />
       </el-col>
@@ -90,28 +99,28 @@
         :md="{ span: 12 }"
         :lg="{ span: 6 }"
         :xl="{ span: 5 }"
-        style="margin-bottom:30px;"
+        style="margin-bottom: 30px"
       >
         <el-card class="infoCartd">
-          <div class="webIcon" style="width:100%;height:220px;">
+          <div class="webIcon" style="width: 100%; height: 220px">
             <img
-              style="width:100%;height:220px;"
+              style="width: 100%; height: 220px"
               v-if="webSetting"
-              :src="BaseUrl + webSetting.icon"
+              src="../../../assets/img/cover.jpg"
               alt
             />
           </div>
           <div class="info">
             <div class="avatar">
               <img
-                style="width:60px;height:60px;"
-                src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
+                style="width: 60px; height: 60px"
+                :src="BaseUrl + avatar"
                 alt
               />
             </div>
             <div class="name" v-if="webSetting">{{ webSetting.Name }}</div>
           </div>
-          <div style="position:relative;padding-left:20px;">
+          <div style="position: relative; padding-left: 20px">
             <div class="progress-item">
               <span>Vue</span>
               <el-progress :percentage="70" />
@@ -154,6 +163,9 @@ export default {
   computed: {
     BaseUrl() {
       return this.$store.state.user.userData.baseUrl
+    },
+    avatar() {
+      return this.$store.state.user.userData.avatar
     }
   },
   created() {

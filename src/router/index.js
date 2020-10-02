@@ -45,7 +45,10 @@ const options = () =>
 const resetPwd = () =>
   import(/* webpackChunkName: "resetPwd" */ '../views/login/resetPwd.vue')
 
-Vue.use(VueRouter)
+  const label = () =>
+  import(/* webpackChunkName: "resetPwd" */ '../views/article/label.vue')
+
+  Vue.use(VueRouter)
 
 export const asyncRoutes = [
   {
@@ -176,6 +179,12 @@ export const routes = [
         name: 'AllArticle',
         component: allArticle,
         meta: { roles: ['admin', 'normal'], title: '文章管理' }
+      },
+      {
+        path: 'label',
+        name: 'Label',
+        component: label,
+        meta: { roles: ['admin'], title: '文章标签', KeepAlive: true }
       },
       {
         path: 'sort',

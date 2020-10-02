@@ -28,6 +28,16 @@
             <el-option
               :key="item._id"
               v-for="(item) in sortLists"
+              :label="item.className"
+              :value="item._id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item prop="label" label="所属标签" label-width="80px">
+          <el-select v-model="articleForm.label" placeholder="请选择标签">
+            <el-option
+              :key="item._id"
+              v-for="(item) in labelLists"
               :label="item.title"
               :value="item._id"
             ></el-option>
@@ -61,6 +71,7 @@
 <script>
 // import TinymceEditor from './component'
 import TinymceEditor from './tinymce'
+import { getSorts } from '../../api/sort'
 export default {
   data() {
     return {
@@ -70,6 +81,7 @@ export default {
       edit: true,
       url: '',
       sortLists: [],
+      labelLists: [],
       fileList2: [],
       articleForm: {
         content: '',
@@ -78,7 +90,8 @@ export default {
         author: '',
         state: '',
         sorts: '',
-        createAt: Date.now
+        createAt: Date.now,
+        label: ''
       },
       html: '',
       tinymce: ''
@@ -101,15 +114,9 @@ export default {
   async created() {
     // 书写文章作者id
     this.articleForm.author = window.sessionStorage.getItem('uId')
-    // 获取分类
-    this.$store
-      .dispatch('scort')
-      .then((data) => {
-        this.sortLists = this.$store.state.scort.sortList
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    // 获取标签
+    this.getLabel()
+    this.getSort()
     // 修改文章获取原有文章信息
     if (window.sessionStorage.getItem('ArticleId')) {
       const id = window.sessionStorage.getItem('ArticleId')
@@ -118,12 +125,15 @@ export default {
       const userInfo = await this.$store.dispatch('findArticle', id)
       // 显示原有文章封面
       this.url = userInfo.cover
+      console.log(userInfo)
       for (var item in this.articleForm) {
         for (var i in userInfo) {
           if (item === i) {
             if (item === 'state') {
               this.articleForm[item] = userInfo[i].toString()
-            } else if (item === 'sorts') {
+            } else if (item === 'sorts' && userInfo.sorts) {
+              this.articleForm[item] = userInfo[i]._id
+            } else if (item === 'label' && userInfo.label) {
               this.articleForm[item] = userInfo[i]._id
             } else {
               this.articleForm[item] = userInfo[i]
@@ -181,6 +191,24 @@ export default {
     },
     change(value, render) {
       this.articleForm.content = render
+    },
+    // 获取分类
+    getSort() {
+      getSorts().then((res) => {
+        console.log(res)
+        this.sortLists = res.data.records
+      })
+    },
+    // 获取标签
+    getLabel() {
+    this.$store
+      .dispatch('label')
+      .then((data) => {
+        this.labelLists = this.$store.state.label.labelList
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     }
   }
 }

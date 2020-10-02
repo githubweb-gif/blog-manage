@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import user from './modules/user'
-import scort from './modules/scort'
+import label from './modules/label'
 import getters from './getters'
 import article from './modules/article'
 import comment from './modules/comment'
@@ -13,7 +13,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   modules: {
     user,
-    scort,
+    label,
     article,
     comment,
     setting,

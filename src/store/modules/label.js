@@ -1,22 +1,20 @@
-import { scort, setSort, setIdSort, delIdSort, articleData, articleDay, articleSon, allInfo } from '../../api/scort'
-const getDefaultState = () => {
-    return {
-        sortList: []
-    }
+import { label, setLabel, setIdLabel, delIdLabel, articleData, articleDay, articleSon, allInfo } from '../../api/label'
+
+const state = {
+    labelList: []
 }
-const state = getDefaultState()
 
 const mutations = {
     getData(state, data) {
-        state.sortList = data
+        state.labelList = data
     }
 }
 
 const actions = {
-    scort({ commit }, page) {
+    label({ commit }, page) {
         console.log('page')
         return new Promise((resolve, reject) => {
-            scort(page).then((response) => {
+            label(page).then((response) => {
                 const { data } = response
                 commit('getData', data)
                 console.log(data)
@@ -26,9 +24,9 @@ const actions = {
             })
         })
     },
-    setSort({ commit }, scortData) {
+    setLabel({ commit }, scortData) {
         return new Promise((resolve, reject) => {
-            setSort(scortData).then((response) => {
+            setLabel(scortData).then((response) => {
                 const { data } = response
                 commit('getData', data)
                 resolve(data)
@@ -38,9 +36,9 @@ const actions = {
         })
     },
     // 修改文章分类
-    setIdSort({ commit }, datas) {
+    setIdLabel({ commit }, datas) {
         return new Promise((resolve, reject) => {
-            setIdSort(datas).then((response) => {
+            setIdLabel(datas).then((response) => {
                 const { data } = response
                 commit('getData', data)
                 resolve(data)
@@ -50,9 +48,9 @@ const actions = {
         })
     },
     // 删除文章分类
-    delIdSort({ commit }, id) {
+    delIdLabel({ commit }, id) {
         return new Promise((resolve, reject) => {
-            delIdSort(id).then((response) => {
+            delIdLabel(id).then((response) => {
                 const { data } = response
                 commit('getData', data)
                 resolve(data)

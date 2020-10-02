@@ -1,9 +1,9 @@
 import request from '../untils/request'
 
-// 查询分类
-export function scort(page) {
+// 查询标签
+export function label(page) {
     return request({
-        url: 'admin/sort',
+        url: 'admin/label',
         method: 'get',
         params: page
     })
@@ -42,26 +42,26 @@ export function allInfo(data) {
     })
 }
 
-// 创建文章分类
-export function setSort(data) {
+// 创建文章标签
+export function setLabel(data) {
     return request({
-        url: 'admin/sort/',
+        url: 'admin/label/',
         method: 'post',
         data
     })
 }
-// 修改文章分类
-export function setIdSort(datas) {
+// 修改文章标签
+export function setIdLabel(datas) {
     return request({
-        url: `admin/sort/${datas.id}`,
+        url: `admin/label/${datas.id}`,
         method: 'put',
         data: datas.data
     })
 }
-// 删除文章分类
-export function delIdSort(id) {
+// 删除文章标签
+export function delIdLabel(id) {
     return request({
-        url: `admin/sort/${id}`,
+        url: `admin/label/${id}`,
         method: 'delete'
     })
 }
