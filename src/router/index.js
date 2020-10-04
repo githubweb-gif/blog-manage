@@ -45,12 +45,53 @@ const options = () =>
 const resetPwd = () =>
   import(/* webpackChunkName: "resetPwd" */ '../views/login/resetPwd.vue')
 
-  const label = () =>
+const label = () =>
   import(/* webpackChunkName: "resetPwd" */ '../views/article/label.vue')
 
-  Vue.use(VueRouter)
+Vue.use(VueRouter)
 
 export const asyncRoutes = [
+  {
+    path: '/article',
+    component: Layout,
+    alwaysShow: true,
+    redirect: '/article/writeArticle',
+    meta: {
+      roles: ['admin', 'normal'],
+      title: '文章',
+      icon: 'el-icon-reading'
+    },
+    children: [
+      {
+        path: 'writeArticle',
+        name: 'WriteArticle',
+        component: Article,
+        meta: {
+          roles: ['admin', 'normal'],
+          title: '写文章',
+          icon: 'el-icon-reading'
+        }
+      },
+      {
+        path: 'allArticle',
+        name: 'AllArticle',
+        component: allArticle,
+        meta: { roles: ['admin', 'normal'], title: '文章管理' }
+      },
+      {
+        path: 'label',
+        name: 'Label',
+        component: label,
+        meta: { roles: ['admin'], title: '文章标签', KeepAlive: true }
+      },
+      {
+        path: 'sort',
+        name: 'Sort',
+        component: sort,
+        meta: { roles: ['admin'], title: '文章分类', KeepAlive: true }
+      }
+    ]
+  },
   {
     path: '/comment',
     component: Layout,
@@ -150,47 +191,6 @@ export const routes = [
           icon: 'el-icon-timer',
           affix: true
         }
-      }
-    ]
-  },
-  {
-    path: '/article',
-    component: Layout,
-    alwaysShow: true,
-    redirect: '/article/writeArticle',
-    meta: {
-      roles: ['admin', 'normal'],
-      title: '文章',
-      icon: 'el-icon-reading'
-    },
-    children: [
-      {
-        path: 'writeArticle',
-        name: 'WriteArticle',
-        component: Article,
-        meta: {
-          roles: ['admin', 'normal'],
-          title: '写文章',
-          icon: 'el-icon-reading'
-        }
-      },
-      {
-        path: 'allArticle',
-        name: 'AllArticle',
-        component: allArticle,
-        meta: { roles: ['admin', 'normal'], title: '文章管理' }
-      },
-      {
-        path: 'label',
-        name: 'Label',
-        component: label,
-        meta: { roles: ['admin'], title: '文章标签', KeepAlive: true }
-      },
-      {
-        path: 'sort',
-        name: 'Sort',
-        component: sort,
-        meta: { roles: ['admin'], title: '文章分类', KeepAlive: true }
       }
     ]
   },

@@ -8,7 +8,9 @@
       </el-table-column>
       <el-table-column prop="title" label="文章">
       </el-table-column>
-      <el-table-column prop="sorts.title" label="分类">
+      <el-table-column prop="sorts.className" label="分类">
+      </el-table-column>
+      <el-table-column prop="label.title" label="标签">
       </el-table-column>
       <el-table-column prop="author.username" label="作者">
       </el-table-column>

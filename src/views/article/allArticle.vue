@@ -1,8 +1,11 @@
 <template>
   <div>
     <el-row type="flex">
-      <el-select clearable class="right" v-model="page.id" placeholder="分类">
-        <el-option v-for="item in sorts" :key="item._id" :label="item.title" :value="item._id"></el-option>
+      <el-select clearable class="right" v-model="page.sortId" placeholder="分类">
+        <el-option v-for="item in sorts" :key="item._id" :label="item.className" :value="item._id"></el-option>
+      </el-select>
+      <el-select clearable class="right" v-model="page.labelId" placeholder="标签">
+        <el-option v-for="item in labels" :key="item._id" :label="item.title" :value="item._id"></el-option>
       </el-select>
       <el-select clearable class="right" v-model="page.state" placeholder="状态">
         <el-option
@@ -84,6 +87,7 @@
 </template>
 
 <script>
+import { getSorts } from '../../api/sort'
 export default {
   data() {
     return {
@@ -93,8 +97,10 @@ export default {
         nowPage: 1,
         pages: 8,
         state: '',
-        id: ''
+        sortId: '',
+        labelId: ''
       },
+      labels: [],
       sorts: [],
       options: [
         {
@@ -123,8 +129,10 @@ export default {
     this.getArticle()
     // 获取标签
     this.$store.dispatch('label').then((res) => {
-      this.sorts = res
+      this.labels = res
     })
+    // 获取分类
+    this.getSorts()
   },
   watch: {
     page: {
@@ -154,6 +162,7 @@ export default {
         _id: this.$store.getters.id
       }
       const data = await this.$store.dispatch('getArticle', info)
+      console.log(data)
       this.articleData = data
     },
     handleSizeChange(page) {
@@ -171,6 +180,11 @@ export default {
     async removeArticle(id) {
       await this.$store.dispatch('delArticle', id)
       this.getArticle()
+    },
+    getSorts() {
+      getSorts().then((res) => {
+         this.sorts = res.data.records
+      })
     }
   }
 }
