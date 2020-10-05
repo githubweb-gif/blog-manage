@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box" @click="logHeight.height = 0">
     <header>
       <div class="nav">
         <div class="bar">
@@ -16,18 +16,13 @@
             </transition-group>
           </el-breadcrumb>
         </div>
-        <div class="logout">
+        <div class="avatar" @click.stop="logoutHeight">
           <img :src="baseURL + avatar" alt />
-          <ul>
-            <li @click="$router.push('/')">首页</li>
-            <li @click="$router.push('/user')">个人中心</li>
-            <li @click="LogOut">退出登录</li>
-          </ul>
         </div>
       </div>
       <tages-view class="tag" />
     </header>
-    <main>
+    <main @scroll="logHeight.height = 0">
       <transition name="fade-transform" mode="out-in">
         <keep-alive>
           <router-view v-if="$route.meta.KeepAlive" :key="key"></router-view>
@@ -56,6 +51,11 @@
       </el-menu>
     </div>
     <div class="shadow" v-show="show" @click="isCollapse = true"></div>
+    <ul class="logout" :style="logHeight">
+      <li @click="$router.push('/')">首页</li>
+      <li @click="$router.push('/user')">个人中心</li>
+      <li @click="LogOut">退出登录</li>
+    </ul>
   </div>
 </template>
 
@@ -71,8 +71,10 @@ export default {
       width: {
         width: 0
       },
-      marginLeft: '0',
-      show: false
+      show: false,
+      logHeight: {
+        height: 0
+      }
     }
   },
   components: {
@@ -108,18 +110,11 @@ export default {
     },
     isCollapse(value) {
       if (document.body.clientWidth < 920) {
-        this.marginLeft = 0
         if (value === false) {
           this.show = true
         } else {
           this.show = false
         }
-        return
-      }
-      if (value === false) {
-        this.marginLeft = '210px'
-      } else {
-        this.marginLeft = '58px'
       }
     }
   },
@@ -143,32 +138,33 @@ export default {
     collapseChange() {
       this.isCollapse = !this.isCollapse
     },
-    handleOpen() {},
-    handleClose() {},
     LogOut() {
       const id = window.sessionStorage.getItem('uId')
       this.$store.dispatch('resetToken', id).then(() => {
         location.reload()
       })
+    },
+    logoutHeight() {
+      if (this.logHeight.height === 0) {
+        this.logHeight.height = '110px'
+      } else {
+        this.logHeight.height = 0
+      }
     }
   },
   mounted() {
     const _this = this
     if (document.body.clientWidth < 920) {
       this.width.width = '0'
-      this.marginLeft = '0'
     } else {
-      this.width.width = '58px'
-      this.marginLeft = '58px'
+      this.width.width = '54px'
       this.isCollapse = true
     }
     window.addEventListener('resize', function () {
       if (document.body.clientWidth < 920) {
         _this.width.width = '0'
-        _this.marginLeft = '0'
       } else {
-        _this.width.width = '58px'
-        _this.marginLeft = '58px'
+        _this.width.width = '54px'
         _this.isCollapse = true
         _this.show = false
       }
@@ -181,7 +177,7 @@ export default {
 @media screen and (max-width: 920px) {
   .side {
     position: fixed;
-    top:0;
+    top: 0;
     left: 0;
     bottom: 0;
   }
@@ -203,12 +199,11 @@ header {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  overflow: hidden;
   border-bottom: 1px solid #d8dce5;
-  .tag{
-    width: 100%;
+  overflow: hidden;
+  .tag {
     padding: 0 20px;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.12), 0 0 3px 0 rgba(0,0,0,.04);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
   }
   .nav {
     display: flex;
@@ -253,42 +248,41 @@ main {
   width: 100%;
   overflow: hidden;
 }
-.logout {
-  position: relative;
+.avatar {
   height: 50px;
   display: flex;
   align-items: center;
   margin-right: 15px;
-  li:last-child {
-    border-top: 1px solid #e3e3e3;
-  }
   img {
     width: 40px;
     height: 40px;
     border-radius: 8px;
   }
-  ul {
-    transition: height 0.3s;
-    overflow: hidden;
-    height: 0;
-    position: absolute;
-    z-index: 2;
-    top: 120%;
-    left: -140%;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    li {
-      height: 36px;
-      line-height: 36px;
-      padding: 0 20px;
-      font-size: 14px;
-      color: black !important;
-      cursor: pointer;
-    }
+}
+.logout {
+  transition: height 0.3s;
+  overflow: hidden;
+  height: 0;
+  position: absolute;
+  z-index: 2000;
+  top: 50px;
+  right: 3%;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  li {
+    height: 36px;
+    line-height: 36px;
+    padding: 0 20px;
+    font-size: 14px;
+    color: black !important;
+    cursor: pointer;
+  }
+  li:last-child {
+    border-top: 1px solid #e3e3e3;
   }
 }
 
-.logout:hover ul {
+.avatar:hover + .logout {
   height: 110px;
 }
 .el-breadcrumb {

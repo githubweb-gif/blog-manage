@@ -84,13 +84,13 @@ export const asyncRoutes = [
         path: 'label',
         name: 'Label',
         component: label,
-        meta: { roles: ['admin'], title: '文章标签', KeepAlive: true, icon: 'list' }
+        meta: { roles: ['admin'], title: '标签', KeepAlive: true, icon: 'list' }
       },
       {
         path: 'sort',
         name: 'Sort',
         component: sort,
-        meta: { roles: ['admin'], title: '文章分类', KeepAlive: true, icon: 'component' }
+        meta: { roles: ['admin'], title: '分类', KeepAlive: true, icon: 'component' }
       }
     ]
   },
