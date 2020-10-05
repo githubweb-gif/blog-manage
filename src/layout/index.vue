@@ -178,7 +178,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 // @media screen and (max-width: 920px) {
 //   .el-aside {
 //     width: 0 !important;
@@ -223,7 +223,9 @@ export default {
 }
 .box,
 .el-container {
+  width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 .el-aside {
   background-color: #304156;
@@ -269,6 +271,7 @@ export default {
 }
 .el-menu {
   border: 0;
+  width: 100%;
   overflow: hidden;
 }
 .logout {

@@ -9,7 +9,7 @@ const baseURL = {
 if (process.env.NODE_ENV === 'production') {
     baseURL.url = 'http://106.53.102.65:3000/'
 } else {
-    baseURL.url = 'http://localhost:3000/'
+    baseURL.url = 'http://106.53.102.65:3000/'
 }
 
 const service = axios.create({

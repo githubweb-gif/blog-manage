@@ -46,7 +46,9 @@ const resetPwd = () =>
   import(/* webpackChunkName: "resetPwd" */ '../views/login/resetPwd.vue')
 
 const label = () =>
-  import(/* webpackChunkName: "resetPwd" */ '../views/article/label.vue')
+  import('../views/article/label.vue')
+  const icon = () =>
+  import('../views/icon/index.vue')
 
 Vue.use(VueRouter)
 
@@ -108,6 +110,26 @@ export const asyncRoutes = [
           roles: ['admin'],
           title: '评论',
           icon: 'el-icon-chat-dot-square',
+          KeepAlive: true
+        }
+      }
+    ]
+  },
+  {
+    path: '/icon',
+    component: Layout,
+    redirect: '/icon/index',
+    meta: {
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'icon',
+        component: icon,
+        meta: {
+          title: '图标',
+          icon: 'el-icon-picture',
           KeepAlive: true
         }
       }
