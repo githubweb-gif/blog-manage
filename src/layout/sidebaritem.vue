@@ -1,16 +1,17 @@
 <template>
   <div class="sideBar" v-if="!route.hidden">
       <el-menu-item v-if="route.children.length === 1? true:false" :index="route.path">
-        <i class="icon" :class="route.children[0].meta.icon"></i>
+        <svg-icon class="icon one" :icon-class="route.children[0].meta.icon" />
         <span slot="title" :style="!collapse===true?'z-index:1;':'z-index:-1;'">{{route.children[0].meta.title}}</span>
       </el-menu-item>
     <el-submenu v-else :index="route.meta.title">
         <template slot="title">
-          <i class="icon" :class="route.meta.icon"></i>
+          <svg-icon  class="icon one" :icon-class="route.meta.icon" />
           <span :style="!collapse===true?'z-index:1;':'z-index:-1;'">{{route.meta.title}}</span>
         </template>
         <template v-for="(i,index) in route.children" >
     <el-menu-item :key="index" v-if="!i.hidden" :index="route.path+'/'+i.path">
+    <svg-icon class="icon two" :icon-class="i.meta.icon" />
                <span :style="!collapse===true?'z-index:1;':'z-index:-1;'" slot="title">{{i.meta.title}}</span>
     </el-menu-item>
         </template>
@@ -58,8 +59,12 @@ export default {
     position: relative;
   }
 }
+.one {
+  margin-left: 20px;
+  margin-right: 16px;
+}
 .icon {
-  display: inline;
-  font-size: 18px;
+  width: 1rem;
+  height: 1rem;
 }
 </style>

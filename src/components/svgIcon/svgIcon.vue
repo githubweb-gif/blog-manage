@@ -12,8 +12,7 @@ export default {
       required: true
     },
     className: {
-      type: String,
-      required: true
+      type: String
     }
   },
   data() {

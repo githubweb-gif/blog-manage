@@ -9,7 +9,7 @@ const getDefaultState = () => {
             token: getToken(),
             // prd: 'http://106.53.102.65:3000'
             // 上传文件url
-            baseUrl: 'http://localhost:3000'
+            baseUrl: 'http://106.53.102.65:3000'
         },
         role: []
     }

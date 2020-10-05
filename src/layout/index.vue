@@ -1,64 +1,61 @@
 <template>
   <div class="box">
-    <el-container>
-      <el-aside class="sidebar-container" :width="isCollapse === false ? '210px' : width">
-        <el-menu
-          :collapse-transition="false"
-          router
-          mode="vertical"
-          :unique-opened="true"
-          default-active="2"
-          background-color="#304156"
+    <header>
+      <div class="nav">
+        <div class="bar">
+          <i @click="collapseChange" class="el-icon-s-fold"></i>
+          <el-breadcrumb separator="/">
+            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+            <transition-group name="breadcrumb">
+              <el-breadcrumb-item
+                :key="item.path"
+                v-for="item in levelList"
+                :to="{ path: item.path }"
+                >{{ item.title }}</el-breadcrumb-item
+              >
+            </transition-group>
+          </el-breadcrumb>
+        </div>
+        <div class="logout">
+          <img :src="baseURL + avatar" alt />
+          <ul>
+            <li @click="$router.push('/')">首页</li>
+            <li @click="$router.push('/user')">个人中心</li>
+            <li @click="LogOut">退出登录</li>
+          </ul>
+        </div>
+      </div>
+      <tages-view class="tag" />
+    </header>
+    <main>
+      <transition name="fade-transform" mode="out-in">
+        <keep-alive>
+          <router-view v-if="$route.meta.KeepAlive" :key="key"></router-view>
+        </keep-alive>
+      </transition>
+      <transition name="fade-transform" mode="out-in">
+        <router-view v-if="!$route.meta.KeepAlive" :key="key"></router-view>
+      </transition>
+    </main>
+    <div class="side" :style="isCollapse === false ? 'width:210px;' : width">
+      <el-menu
+        :collapse-transition="false"
+        router
+        mode="vertical"
+        :unique-opened="true"
+        default-active="2"
+        background-color="#304156"
+        :collapse="isCollapse"
+      >
+        <side-barItem
           :collapse="isCollapse"
-        >
-          <side-barItem
-            :collapse="isCollapse"
-            :key="index"
-            v-for="(item, index) in routes"
-            :route="item"
-          ></side-barItem>
-        </el-menu>
-      </el-aside>
-      <el-container :style="{ 'margin-left': marginLeft }">
-        <el-header>
-          <div class="navBar">
-            <div class="bar">
-              <i @click="collapseChange" class="el-icon-s-fold"></i>
-              <el-breadcrumb separator="/">
-                <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                <transition-group name="breadcrumb">
-                  <el-breadcrumb-item
-                    :key="item.path"
-                    v-for="item in levelList"
-                    :to="{ path: item.path }"
-                  >{{ item.title }}</el-breadcrumb-item>
-                </transition-group>
-              </el-breadcrumb>
-            </div>
-            <div class="logout">
-              <img :src="baseURL + avatar" alt />
-              <ul>
-                <li @click="$router.push('/')">首页</li>
-                <li @click="$router.push('/user')">个人中心</li>
-                <li @click="LogOut">退出登录</li>
-              </ul>
-            </div>
-          </div>
-          <tages-view></tages-view>
-        </el-header>
-        <el-main>
-          <transition name="fade-transform" mode="out-in">
-            <keep-alive>
-              <router-view v-if="$route.meta.KeepAlive" :key="key"></router-view>
-            </keep-alive>
-          </transition>
-          <transition name="fade-transform" mode="out-in">
-            <router-view v-if="!$route.meta.KeepAlive" :key="key"></router-view>
-          </transition>
-        </el-main>
-      </el-container>
-      <div class="shadow" v-show="show" @click="isCollapse = true"></div>
-    </el-container>
+          :key="index"
+          v-for="(item, index) in routes"
+          :route="item"
+        ></side-barItem>
+      </el-menu>
+    </div>
+    <div class="shadow" v-show="show" @click="isCollapse = true"></div>
   </div>
 </template>
 
@@ -71,7 +68,9 @@ export default {
     return {
       isCollapse: true,
       levelList: [],
-      width: '0',
+      width: {
+        width: 0
+      },
       marginLeft: '0',
       show: false
     }
@@ -156,19 +155,19 @@ export default {
   mounted() {
     const _this = this
     if (document.body.clientWidth < 920) {
-      this.width = '0'
+      this.width.width = '0'
       this.marginLeft = '0'
     } else {
-      this.width = '58px'
+      this.width.width = '58px'
       this.marginLeft = '58px'
       this.isCollapse = true
     }
     window.addEventListener('resize', function () {
       if (document.body.clientWidth < 920) {
-        _this.width = '0'
+        _this.width.width = '0'
         _this.marginLeft = '0'
       } else {
-        _this.width = '58px'
+        _this.width.width = '58px'
         _this.marginLeft = '58px'
         _this.isCollapse = true
         _this.show = false
@@ -179,96 +178,75 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// @media screen and (max-width: 920px) {
-//   .el-aside {
-//     width: 0 !important;
-//   }
-// }
-.breadcrumb-enter-active,
-.breadcrumb-leave-active {
-  transition: all 0.5s;
+@media screen and (max-width: 920px) {
+  .side {
+    position: fixed;
+    top:0;
+    left: 0;
+    bottom: 0;
+  }
 }
-
-.breadcrumb-enter,
-.breadcrumb-leave-active {
-  opacity: 0;
-  transform: translateX(20px);
-}
-
-.breadcrumb-move {
-  transition: all 0.5s;
-}
-
-.breadcrumb-leave-active {
-  position: absolute;
-}
-
-.fade-transform-leave-active,
-.fade-transform-enter-active {
-  transition: all 0.5s;
-  height: 100%;
-}
-
-.fade-transform-enter {
-  opacity: 0;
-  transform: translateX(30px);
-}
-
-.fade-transform-leave-to {
-  opacity: 0;
-  transform: translateX(30px);
-}
-* {
-  color: rgb(191, 203, 217) !important;
-}
-.box,
-.el-container {
+.box {
+  display: grid;
   width: 100%;
   height: 100%;
   overflow: hidden;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "side header"
+    "side main";
 }
-.el-aside {
-  background-color: #304156;
-  transition: width 0.3s;
-  overflow-x: hidden;
-  overflow-y: auto;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1001;
-  height: 100%;
-  z-index: 3;
-}
-.el-header {
-  position: relative;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-  padding: 0 !important;
-  height: auto !important;
-  .navBar {
+
+header {
+  grid-area: header;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border-bottom: 1px solid #d8dce5;
+  .tag{
+    width: 100%;
+    padding: 0 20px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.12), 0 0 3px 0 rgba(0,0,0,.04);
+  }
+  .nav {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: nowrap;
+    padding: 0 20px;
     align-items: center;
-    padding-left: 20px;
-    border-bottom: 1px solid #d8dce5;
+    justify-content: space-between;
     .bar {
       display: flex;
       align-items: center;
-    }
-    i {
-      display: inline-block;
-      font-size: 30px;
-      color: black !important;
-      cursor: pointer;
+      height: 100%;
+      overflow: hidden;
+      .el-icon-s-fold {
+        font-size: 25px;
+      }
     }
   }
 }
-.el-main {
-  padding: 20px !important;
-  background-color: #f0f2f5;
-  overflow-x: hidden;
+
+header,
+main {
+  transition: all 0.3s;
 }
+
+main {
+  overflow-y: auto;
+  padding: 0 20px;
+  overflow-x: hidden;
+  grid-area: main;
+  background-color: #f0f2f5;
+}
+
+.side {
+  grid-area: side;
+  background-color: #304156;
+  transition: all 0.3s;
+  z-index: 999;
+}
+
 .el-menu {
   border: 0;
   width: 100%;
@@ -318,9 +296,6 @@ export default {
   line-height: 50px;
   margin-left: 30px;
 }
-.el-container {
-  transition: margin 0.3s;
-}
 .shadow {
   position: fixed;
   top: 0;
@@ -330,5 +305,39 @@ export default {
   background-color: #52484a;
   opacity: 0.5;
   z-index: 2;
+}
+.breadcrumb-enter-active,
+.breadcrumb-leave-active {
+  transition: all 0.5s;
+}
+
+.breadcrumb-enter,
+.breadcrumb-leave-active {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.breadcrumb-move {
+  transition: all 0.5s;
+}
+
+.breadcrumb-leave-active {
+  position: absolute;
+}
+
+.fade-transform-leave-active,
+.fade-transform-enter-active {
+  transition: all 0.5s;
+  height: 100%;
+}
+
+.fade-transform-enter {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
 }
 </style>

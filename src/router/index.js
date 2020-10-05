@@ -61,7 +61,7 @@ export const asyncRoutes = [
     meta: {
       roles: ['admin', 'normal'],
       title: '文章',
-      icon: 'el-icon-reading'
+      icon: 'documentation'
     },
     children: [
       {
@@ -71,26 +71,26 @@ export const asyncRoutes = [
         meta: {
           roles: ['admin', 'normal'],
           title: '写文章',
-          icon: 'el-icon-reading'
+          icon: 'form'
         }
       },
       {
         path: 'allArticle',
         name: 'AllArticle',
         component: allArticle,
-        meta: { roles: ['admin', 'normal'], title: '文章管理' }
+        meta: { roles: ['admin', 'normal'], title: '文章管理', icon: 'wenzhangfenlei' }
       },
       {
         path: 'label',
         name: 'Label',
         component: label,
-        meta: { roles: ['admin'], title: '文章标签', KeepAlive: true }
+        meta: { roles: ['admin'], title: '文章标签', KeepAlive: true, icon: 'list' }
       },
       {
         path: 'sort',
         name: 'Sort',
         component: sort,
-        meta: { roles: ['admin'], title: '文章分类', KeepAlive: true }
+        meta: { roles: ['admin'], title: '文章分类', KeepAlive: true, icon: 'component' }
       }
     ]
   },
@@ -109,7 +109,7 @@ export const asyncRoutes = [
         meta: {
           roles: ['admin'],
           title: '评论',
-          icon: 'el-icon-chat-dot-square',
+          icon: 'message',
           KeepAlive: true
         }
       }
@@ -129,7 +129,7 @@ export const asyncRoutes = [
         component: icon,
         meta: {
           title: '图标',
-          icon: 'el-icon-picture',
+          icon: 'icon',
           KeepAlive: true
         }
       }
@@ -155,7 +155,7 @@ export const asyncRoutes = [
     meta: {
       roles: ['admin', 'normal'],
       title: '用户',
-      icon: 'el-icon-s-custom'
+      icon: 'user'
     },
     children: [
       {
@@ -165,14 +165,14 @@ export const asyncRoutes = [
         meta: {
           roles: ['admin', 'normal'],
           title: '个人中心',
-          icon: 'el-icon-s-custom'
+          icon: 'user'
         }
       },
       {
         path: 'management',
         name: 'Management',
         component: UserManagement,
-        meta: { roles: ['admin'], title: '用户管理' }
+        meta: { roles: ['admin'], title: '用户管理', icon: 'peoples' }
       }
     ]
   },
@@ -188,7 +188,7 @@ export const asyncRoutes = [
         path: 'index',
         name: 'Options',
         component: options,
-        meta: { roles: ['admin'], title: '网站设置', icon: 'el-icon-setting' }
+        meta: { roles: ['admin'], title: '网站设置', icon: 'shezhi (2)' }
       }
     ]
   }
@@ -210,7 +210,7 @@ export const routes = [
         meta: {
           roles: ['admin', 'normal'],
           title: '仪表盘',
-          icon: 'el-icon-timer',
+          icon: 'dashboard',
           affix: true
         }
       }
