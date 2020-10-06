@@ -26,7 +26,7 @@
         v-if="articleData"
         :data="articleData.records"
         style="width: 100%;"
-        :default-sort="{ prop: 'sorts.createAt', order: 'descending' }"
+        :default-sort="{ prop: 'sorts.createAt', order: 'ascending' }"
       >
         <el-table-column label="序号" type="index" align="center" width="50">
           <template v-slot:default="scope">
