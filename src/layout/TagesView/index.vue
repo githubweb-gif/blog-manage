@@ -164,7 +164,8 @@ export default {
     openMenu(tag, e) {
       console.log(this.$el.getBoundingClientRect().left)
       const left = e.clientX - this.$el.getBoundingClientRect().left
-      const top = e.offsetY
+      console.log(e)
+      const top = e.clientY
       // card最大左边距
       const maxLeft = this.$el.offsetWidth - 100
       if (left > maxLeft) {
@@ -211,7 +212,6 @@ export default {
 
 <style lang="scss" scoped>
 .tag {
-  position: relative;
   height: 30px;
   line-height: 30px;
 }
@@ -255,7 +255,7 @@ export default {
 }
 .card {
   position: absolute;
-  z-index: 2;
+  z-index: 2000;
   width: 100px;
   font-size: 12px;
   text-align: center;

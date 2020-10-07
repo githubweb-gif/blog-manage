@@ -50,7 +50,7 @@
         :total="total"
       ></el-pagination>
     </div>
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="400px">
+    <el-dialog :visible.sync="dialogVisible" width="400px">
       <el-form ref="labelForm" :model="labelForm" label-width="80px">
         <h3>添加标签</h3>
         <el-form-item label="标签">
@@ -155,5 +155,10 @@ export default {
 }
 .el-row {
   margin-bottom: 20px;
+}
+.el-dialog {
+  h3 {
+    margin-bottom: 1rem;
+  }
 }
 </style>
